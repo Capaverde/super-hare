@@ -1,0 +1,38 @@
+{ /n def 
+  1 /i def
+  &{ { n i gteq } { i i 1 add /i def } while &} apply
+} /genlist defun
+
+10 genlist prettyprint
+
+{ This is a comment. Below I implement a map that is equivalent to the hardcoded one. } drop
+
+{ dup mul } /square defun
+
+{ /f def
+  /list def
+ &{ { list head null not } { list head f apply list tail /list def } while &} apply
+} /mymap defun
+
+10 genlist &square mymap prettyprint
+
+{ Alternatively, use an anonymous function. } drop
+
+10 genlist { dup mul } mymap prettyprint
+
+{ The difference between def and defun is merely of the default behavior when met by the interpreter. } drop
+
+{ 2 add } /add2 defun
+
+1 add2
+
+{ 2 add } /add2_ def
+
+1 add2_ apply
+
+{ A '&' before a defun'd block turns its behavior into a def'd block. } drop
+
+1 &add2 apply
+
+{ This is useful to pass functions as arguments, which otherwise would be impossible for defun'd blocks.
+  And without defun some pieces of code would turn excessively verbose. } drop
